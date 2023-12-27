@@ -1,0 +1,21 @@
+services:
+  container1:
+    build:
+      context: ./
+      dockerfile: flask1.Dockerfile
+    container_name: flask1
+    environment: 
+      FLASK_HOST: "http://flask2:5002"
+    image: myeongeun/assignment2_flask1
+    hostname: flask1
+    ports:
+      - "5001:5001"
+  container2:
+    build:
+      context: ./
+      dockerfile: flask2.Dockerfile
+    container_name: flask2
+    image: myeongeun/assignment2_flask2
+    hostname: flask2
+    ports:
+      - "5002:5002"

@@ -1,0 +1,74 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask1
+  labels:
+    app: flask1
+spec:
+  selector:
+    matchLabels:
+      app: flask1
+  template:
+    metadata:
+      labels:
+        app: flask1
+    spec:
+      containers:
+      - name: flask1
+        image: myeongeun/assignment3_flask1:v6
+        ports:
+        - containerPort: 5001   
+---
+# Deployment2 : Flask2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask2
+  labels:
+    app: flask2
+spec:
+  selector:
+    matchLabels:
+      app: flask2
+  template:
+    metadata:
+      labels:
+        app: flask2
+    spec:
+      containers:
+      - name: flask2
+        image: myeongeun/assignment3_flask2:v1
+        ports:
+        - containerPort: 5002
+---
+# Service1 : NodePort for Flask1
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask1
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 5001
+    nodePort: 30001
+    protocol: TCP
+  selector:
+    app: flask1
+---
+# Service2 : NodePort for Flask2
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask2
+spec:
+  selector:
+    app: flask2
+  type: NodePort
+  ports:
+  - name: http
+    port: 5002
+    nodePort: 30002
+    protocol: TCP
+  
